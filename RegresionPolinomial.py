@@ -23,7 +23,7 @@ def RPol(_info):
 
     co1,co2,co3 = st.columns(3)
     with co2:
-        prediccion = st.text_input('Ingrese valor para aproximar','0')
+        prediccion = st.text_input('Ingrese valor para aproximar','100')
 
     x = _info[paramx]
     y = _info[paramy]
@@ -37,7 +37,7 @@ def RPol(_info):
     #plot si se quiere
     #fig1, ax = plt.subplots()
     #ax.scatter(x,y)
-
+ 
     #---------------------Paso 2-------------------------------------------
     #---------------------Preparacion de la informacion--------------------
     nb_degree = int(grado)
@@ -85,3 +85,10 @@ def RPol(_info):
 
     with st.expander("Ver grafica regresion polinomial"):
         st.pyplot(fig)
+    
+    with st.expander("Ver grafica de Puntos"):
+        fig2,ax2 = plt.subplots()
+        ax2.scatter(x,y, color='black')
+        st.pyplot(fig2)
+
+    

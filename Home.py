@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 from RegresionLineal import * 
 from RegresionPolinomial import *
+from ClasificadorGaussiano import *
 
 
 #importo otra page
@@ -61,7 +62,13 @@ if option == 'Regresión lineal':
 elif option == 'Regresión polinomial':
   RPol(df)
 elif option == 'Clasificador Gaussiano':
-  print("Clasificador Gaussiano")
+  ClGaussiano(df)
+  #param = st.text_input('Ingrese parametro de aproximacion','I')
+  #data_top = df.columns.values
+  #listaa = data_top.tolist()
+
+  #print("Clasificador Gaussiano")
+  #ClGaussiano(df)
 elif option == 'Clasificador de árboles de decisión':
   print("Clasificador de árboles de decisión")
 elif option == 'Redes neuronales':

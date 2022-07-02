@@ -57,4 +57,3 @@ def RL(_info):
         calcular = st.text_input('Valor para aproximacion','0')
         variable = regr.predict([[int(calcular)]])
         st.text(variable)
-    
