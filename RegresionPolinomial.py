@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.metrics import mean_squared_error, r2_score
 
@@ -69,6 +70,7 @@ def RPol(_info):
 
     fig, ax = plt.subplots()
     plt.plot(X_NEW, Y_NEW, color='blue',linewidth=3)
+    ax.scatter(X_NEW,Y_NEW, color ='black')
     plt.grid()
     plt.xlim(x_new_min, x_new_max)
     title = 'Degree = {}; RMSE = {}; R2={};'.format(nb_degree,rmse,r2)
@@ -78,17 +80,41 @@ def RPol(_info):
 
     #---------------------Paso 6-----------------------------------------
     #---------------------Impresion de resultados------------------------
+    
     st.subheader('Resultados')
-    d = {'RMSE' : rmse,'R2':  r2,'Prediccion':Y_NEW[Y_NEW.size-1]}
+    ecuacion = ''
+    coeficientes = model.coef_
+    coeficientes = np.asarray(coeficientes)
+    
+    auxcoeficientes = coeficientes.reshape(-1,1)
+    intercept = model.intercept_
+    intercept = str(model.intercept_).replace('[','')
+    intercept = str(intercept).replace(']','')
+    print('\n\n\nCoeficientes= ',auxcoeficientes)
+    print('\nIntercept= ',intercept)
+    for xxx in range(int(grado),0,-1):
+        aux = str(auxcoeficientes[xxx]).replace('[','')
+        aux = aux.replace(']','')
+        print('coeficiente = ',aux)
+        ecuacion += str(aux)+'X^'+str(xxx)+' + '
+    ecuacion+= ' + '+str(intercept)
+
+    print('Ecuacion = ',str(ecuacion))
+
+
+    d = {'RMSE' : rmse,'R2':  r2,'Prediccion':Y_NEW[Y_NEW.size-1],'Ecuacion de '+grado+' grado':str(ecuacion)}
     dresult = pd.DataFrame(data = d)
     st.dataframe(dresult)
+
+    with st.expander("Ver grafica de Puntos"):
+        fig2,ax2 = plt.subplots()
+        plt.grid()
+        ax2.scatter(x,y, color='black')
+        st.pyplot(fig2)
 
     with st.expander("Ver grafica regresion polinomial"):
         st.pyplot(fig)
     
-    with st.expander("Ver grafica de Puntos"):
-        fig2,ax2 = plt.subplots()
-        ax2.scatter(x,y, color='black')
-        st.pyplot(fig2)
+    
 
     

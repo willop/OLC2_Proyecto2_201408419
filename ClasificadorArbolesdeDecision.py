@@ -4,12 +4,16 @@ from sklearn import preprocessing
 import pandas as pd
 import streamlit as st
 import numpy as np
-from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn import preprocessing
 
-def ClGaussiano(_info):
-    st.title('Clasificador Gaussiano')
+def ArbolD(_info):
+    st.title('Clasificador de Arbol de desicion')
     st.subheader('Informacion')
     st.write(_info)
+    #st.subheader('Parametros')
+    #param = st.text_input('Ingrese parametro de aproximacion','I')
+
     st.subheader('Parametros')
     param = st.text_input('Ingrese parametro de aproximacion','I')
     
@@ -38,8 +42,7 @@ def ClGaussiano(_info):
         listadedf.append(aux)
     listadedf = np.array(listadedf)
 
-
-    # Creacion del codificador de palabras
+     # Creacion del codificador de palabras
     le = preprocessing.LabelEncoder()
 
     #Se convierte los String a numeros
@@ -49,7 +52,6 @@ def ClGaussiano(_info):
 
     #Se convierte los string a numero del parametro
     label = le.fit_transform(result)
-    
 
     # Combinando los atributos en una lista simple de tuplas
     #st.subheader('Resultados con etiquetas')
@@ -71,34 +73,19 @@ def ClGaussiano(_info):
         features = features.reshape(int(tamfilas/tamcolumnas),tamcolumnas)
         st.dataframe(features)
     #print(features)
-    
-    #----------------- Crear el clasificador Gaussiano
-    model = GaussianNB()
-    model2 = GaussianNB()
-    #---------------- Se entrena el modelo
-    model.fit(np.asarray(features),np.asarray(result))
-    model2.fit(featuresencoders,label)
 
-    columna = len(listaa)
-    texto = "Ingrese "+str(columna)+" parametros, separados por coma(,)"
-    predecirresult = st.text_input(texto,'')
+    #se encaja con el modelo
+    clf = DecisionTreeClassifier(max_depth=4).fit(features,result)
+    fig,ax = plt.subplots()
+    plot_tree(clf,filled = True, fontsize=10)
+    st.subheader('Graficas')
+    with st.expander("Mostrar arbol sin etiquetas"):
+        plt.figure(figsize=(50,50))
+        st.pyplot(fig)
 
-    if predecirresult != '':
-        entrada = predecirresult.split(",")
-        map_obj = list(map(int,entrada))
-        map_obj = np.array(map_obj)
-        predicted = model.predict(np.asarray([map_obj]))
-        predicted2 = model2.predict(np.asarray([map_obj]))
-        print(np.asarray([map_obj]))
-        
-        co1,co2,co3 = st.columns(3)
-        with co2:
-            st.subheader('Prediccion con etiquetas')
-            st.write(predicted)
-
-        coo1,coo2,coo3 = st.columns(3)
-        with coo2:
-            st.subheader('Prediccion sin etiquetas')
-            st.write(predicted2)
-    
-    
+    clf2 = DecisionTreeClassifier(max_depth=5).fit(featuresencoders,label)
+    fig2,ax2 = plt.subplots()
+    plot_tree(clf2,filled = True)
+    with st.expander("Mostrar arbol con etiquetas"):
+        plt.figure(figsize=(50,50))
+        st.pyplot(fig2)

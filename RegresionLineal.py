@@ -30,6 +30,7 @@ def RL(_info):
     y_pred = regr.predict(x)
     regresion = regr.coef_
 
+
     #plt.scatter(x,y, color='black')
     #plt.plot(x,y_pred, color='blue', linewidth=3)
     #st.pyplot(plt.show())
@@ -43,17 +44,25 @@ def RL(_info):
     plt.ylabel(paramy)
     plt.grid()
     #st.pyplot(fig)
-
-    d = {'Coeficiente de regresion': [regresion], 'Error cuadratico':[mean_squared_error(y,y_pred)], 'Coeficinte de determinacion':[r2_score(y,y_pred)]}
+    texto = str(round(regr.coef_[0],2))+"X+"+str(round(regr.intercept_,2))
+    print("Ecuacion ",texto)
+    d = {'Coeficiente de regresion': [regresion], 'Error cuadratico':[mean_squared_error(y,y_pred)], 'Coeficinte de determinacion':[r2_score(y,y_pred)],'Ecuacion lineal Ax + B':texto}
     dresult = pd.DataFrame(data=d)
     st.dataframe(dresult)
 
     with st.expander("Ver grafica regresion lineal"):
         st.pyplot(fig)
+    
+    with st.expander("Ver grafica de Puntos"):
+        fig2,ax2 = plt.subplots()
+        ax2.scatter(x,y, color='black')
+        st.pyplot(fig2)
 
 #aproximacion
     c1,c2,c3 = st.columns(3)
     with c2:
+        #print(texto)
+        #st.subheader(texto)
         calcular = st.text_input('Valor para aproximacion','0')
         variable = regr.predict([[int(calcular)]])
         st.text(variable)

@@ -8,6 +8,7 @@ import pandas as pd
 from RegresionLineal import * 
 from RegresionPolinomial import *
 from ClasificadorGaussiano import *
+from ClasificadorArbolesdeDecision import *
 
 
 #importo otra page
@@ -70,7 +71,8 @@ elif option == 'Clasificador Gaussiano':
   #print("Clasificador Gaussiano")
   #ClGaussiano(df)
 elif option == 'Clasificador de árboles de decisión':
-  print("Clasificador de árboles de decisión")
+  #print("Clasificador de árboles de decisión")
+  ArbolD(df)
 elif option == 'Redes neuronales':
   print("Redes neuronales")
 
