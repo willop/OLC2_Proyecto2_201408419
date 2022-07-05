@@ -9,6 +9,7 @@ from RegresionLineal import *
 from RegresionPolinomial import *
 from ClasificadorGaussiano import *
 from ClasificadorArbolesdeDecision import *
+from RedNeuronal import *
 
 
 #importo otra page
@@ -74,7 +75,9 @@ elif option == 'Clasificador de árboles de decisión':
   #print("Clasificador de árboles de decisión")
   ArbolD(df)
 elif option == 'Redes neuronales':
-  print("Redes neuronales")
+  RedNeuronal(df)
+  
+  #print("Redes neuronales")
 
 
 
