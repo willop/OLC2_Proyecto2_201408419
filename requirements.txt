@@ -4,5 +4,3 @@ numpy
 pandas
 matplotlib
 sklearn
-cross_val_score
-MLPClassifier
