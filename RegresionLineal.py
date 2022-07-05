@@ -36,9 +36,15 @@ def RL(_info):
     #st.pyplot(plt.show())
 
     st.subheader('Resultados')
+    color = st.select_slider(
+     'Seleccione un color para la recta',
+     options=['black','red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
+    color2 = st.select_slider(
+     'Seleccione un color para los puntos',
+     options=['black','red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
     fig, ax = plt.subplots()
-    ax.scatter(x,y, color='black')
-    ax.plot(x,y_pred,color = 'blue')
+    ax.scatter(x,y, color=color2)
+    ax.plot(x,y_pred,color = color)
     plt.title('Regresio lineal\nCoeficiente de regresion: '+str(regresion))#,'  con un error cuadratico: ',mean_squared_error(y,y_pred))
     plt.xlabel(paramx)
     plt.ylabel(paramy)

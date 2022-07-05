@@ -68,9 +68,15 @@ def RPol(_info):
     X_NEW_TRANSF = polinomial_feature.fit_transform(X_NEW)
     Y_NEW = model.predict(X_NEW_TRANSF)
 
+    color = st.select_slider(
+     'Seleccione un color para la recta',
+     options=['black','red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
+    color2 = st.select_slider(
+     'Seleccione un color para los puntos',
+     options=['black','red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
     fig, ax = plt.subplots()
-    plt.plot(X_NEW, Y_NEW, color='blue',linewidth=3)
-    ax.scatter(X_NEW,Y_NEW, color ='black')
+    plt.plot(X_NEW, Y_NEW, color=color,linewidth=3)
+    ax.scatter(X_NEW,Y_NEW, color =color2)
     plt.grid()
     plt.xlim(x_new_min, x_new_max)
     title = 'Degree = {}; RMSE = {}; R2={};'.format(nb_degree,rmse,r2)
@@ -97,11 +103,9 @@ def RPol(_info):
         aux = aux.replace(']','')
         print('coeficiente = ',aux)
         ecuacion += str(aux)+'X^'+str(xxx)+' + '
-    ecuacion+= ' + '+str(intercept)
+    ecuacion+= str(intercept)
 
     print('Ecuacion = ',str(ecuacion))
-
-
     d = {'RMSE' : rmse,'R2':  r2,'Prediccion':Y_NEW[Y_NEW.size-1],'Ecuacion de '+grado+' grado':str(ecuacion)}
     dresult = pd.DataFrame(data = d)
     st.dataframe(dresult)
@@ -114,7 +118,4 @@ def RPol(_info):
 
     with st.expander("Ver grafica regresion polinomial"):
         st.pyplot(fig)
-    
-    
-
     

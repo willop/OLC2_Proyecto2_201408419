@@ -48,8 +48,19 @@ def RedNeuronal(_info):
     scores = cross_val_score(nn,x,y)
     st.text('Scores')
     st.write(scores)
-    info = 'Score '+str(scores.mean())+' -Std. Desviacion '+str(scores.std())
-    st.text('Score')
+    info = 'Score/puntuacion '+str(scores.mean())+' -Std. Desviacion '+str(scores.std())
+    st.subheader('Score')
     st.text(info)
 
     ## no incluir float ni palabras
+    st.title('Predecir un valor')
+    textomostrar = 'Ingrese '+str(len(x.columns))+' parametros separados por coma (,)'
+    prediccion = st.text_input(textomostrar,'')
+    if prediccion != '':
+        entrada = prediccion.split(",")
+        map_obj = list(map(int,entrada))
+        map_obj = np.array(map_obj)
+        print('arreglo de entrada: ',entrada)
+        nn.fit(x,y)
+        st.header('Resultado:')
+        st.subheader(nn.predict([map_obj]))
